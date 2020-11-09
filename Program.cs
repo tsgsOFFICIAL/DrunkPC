@@ -27,7 +27,7 @@ namespace DrunkPC
             Thread drunkKeyboardThread = new Thread(new ThreadStart(DrunkKeyboardThread));
             Thread drunkSoundThread = new Thread(new ThreadStart(DrunkSoundThread));
             Thread drunkPopupThread = new Thread(new ThreadStart(DrunkPopupThread));
-            
+
             DateTime future = DateTime.Now.AddSeconds(_startupDelaySeconds);
             while (future > DateTime.Now)
             {
@@ -79,16 +79,20 @@ namespace DrunkPC
         {
             while (true)
             {
-                //Get a random char
-                char key = (char)_random.Next(65, 90 + 1);
-
-                //Upper or lowercase
-                if (_random.Next(2) == 0)
+                if (_random.Next(100) > 80)
                 {
-                    key = char.ToLower(key);
-                }
 
-                SendKeys.SendWait(key.ToString());
+                    //Get a random char
+                    char key = (char)_random.Next(65, 90 + 1);
+
+                    //Upper or lowercase
+                    if (_random.Next(2) == 0)
+                    {
+                        key = char.ToLower(key);
+                    }
+
+                    SendKeys.SendWait(key.ToString());
+                }
                 Thread.Sleep(_random.Next(500));
             }
         }
