@@ -8,19 +8,27 @@ namespace DrunkPC
     class Program
     {
         public static Random _random = new Random();
+        public static int _startupDelaySeconds = 10;
+        public static int _totalDurationSeconds = 10;
         /// <summary>
         /// Entry point
         /// </summary>
         /// <param name="args"></param>
         static void Main(string[] args)
         {
+            if (args.Length >= 2)
+            {
+                _startupDelaySeconds = Convert.ToInt32(args[0]);
+                _totalDurationSeconds = Convert.ToInt32(args[1]);
+            }
+
             //Create the threads
             Thread drunkMouseThread = new Thread(new ThreadStart(DrunkMouseThread));
             Thread drunkKeyboardThread = new Thread(new ThreadStart(DrunkKeyboardThread));
             Thread drunkSoundThread = new Thread(new ThreadStart(DrunkSoundThread));
             Thread drunkPopupThread = new Thread(new ThreadStart(DrunkPopupThread));
             
-            DateTime future = DateTime.Now.AddSeconds(10);
+            DateTime future = DateTime.Now.AddSeconds(_startupDelaySeconds);
             while (future > DateTime.Now)
             {
                 Thread.Sleep(1000);
@@ -32,7 +40,7 @@ namespace DrunkPC
             drunkSoundThread.Start();
             drunkPopupThread.Start();
 
-            future = DateTime.Now.AddSeconds(10);
+            future = DateTime.Now.AddSeconds(_totalDurationSeconds);
             while (future > DateTime.Now)
             {
                 Thread.Sleep(1000);
